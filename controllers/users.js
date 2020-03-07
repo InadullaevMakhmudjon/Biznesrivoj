@@ -32,17 +32,17 @@ export default {
   },
   update(req, res) {
     models.User.update(req.newUser, { where: { id: req.params.id } })
-      .then(() => res.send(200))
+      .then(() => res.sendStatus(200))
       .catch((error) => res.status(502).json(error));
   },
   create(req, res) {
     models.User.create(req.newUser)
-      .then(() => res.send(201))
+      .then(() => res.sendStatus(201))
       .catch((error) => res.status(502).json(error));
   },
   delete(req, res) {
     models.User.destroy({ where: { id: req.params.id } })
-      .then(() => res.send(200))
-      .json((error) => res.status(502).json(error));
+      .then(() => res.sendStatus(200))
+      .catch((error) => res.status(502).json(error));
   },
 };
