@@ -4,6 +4,8 @@ import { join } from 'path';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
+import swaggerUI from 'swagger-ui-express';
+import swaggerDocs from './docs';
 import indexRouter from './routes/index';
 import './config/passport';
 
@@ -18,6 +20,7 @@ app.use(urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors());
 
+app.use('/api/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 indexRouter(app);
 
 // catch 404 and forward to error handler
