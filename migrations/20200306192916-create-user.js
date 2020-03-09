@@ -26,6 +26,11 @@ module.exports = {
     quote: {
       type: Sequelize.STRING,
     },
+    active: {
+      type: Sequelize.INTEGER,
+      allowNull: false,
+      defaultValue: 0,
+    },
     dateOfBirth: {
       allowNull: false,
       type: Sequelize.DATE,
