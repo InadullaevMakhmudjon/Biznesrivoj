@@ -15,10 +15,6 @@ function find(where, res, next) {
         model: models.Role,
         as: 'role',
       },
-      {
-        model: models.Article,
-        as: 'articles',
-      },
     ],
   })
     .then((users) => {
