@@ -22,6 +22,10 @@
     {
       "name": "Users",
       "description": "User enpoints"
+    },
+    {
+      "name": "Articles",
+      "description": "Article enpoints"
     }
   ],
   "definitions": {
@@ -71,6 +75,55 @@
       "type": "object",
       "properties": {
         "fullName": {
+          "type": "string"
+        }
+      }
+    },
+    "ArticleCreate": {
+      "type": "object",
+      "properties": {
+        "metaFields": {
+          "type": "string"
+        },
+        "slug": {
+          "type": "string",
+          "description": "Slug should be unique"
+        },
+        "title_uz": {
+          "type": "string"
+        },
+        "title_ru": {
+          "type": "string"
+        },
+        "body_uz": {
+          "type": "string"
+        },
+        "body_ru": {
+          "type": "string"
+        },
+        "description_uz": {
+          "type": "string"
+        },
+        "description_ru": {
+          "type": "string"
+        },
+        "categories": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "base64"
+          },
+          "example": [
+            1,
+            2
+          ]
+        }
+      }
+    },
+    "ArticleUpdate": {
+      "type": "object",
+      "properties": {
+        "metaFields": {
           "type": "string"
         }
       }
@@ -214,7 +267,7 @@
     "/api/users/{id}": {
       "get": {
         "summary": "A user endpoint",
-        "description": "Gets all users",
+        "description": "Gets a users",
         "tags": [
           "Users"
         ],
@@ -300,6 +353,185 @@
             "required": true,
             "type": "integer",
             "format": "base64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/users/{id}/articles": {
+      "get": {
+        "summary": "Articles of the user",
+        "description": "Gers all articles belong to the user",
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "type": "string",
+            "name": "Authorization",
+            "description": "Header",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Id of the user to get",
+            "required": true,
+            "type": "integer",
+            "format": "base64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/articles": {
+      "get": {
+        "summary": "All articles endpoint",
+        "description": "Gets all articles",
+        "tags": [
+          "Articles"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "type": "string",
+            "name": "Authorization",
+            "description": "Header",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "summary": "Article create endpoint",
+        "description": "Creates an article",
+        "tags": [
+          "Articles"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "type": "string",
+            "name": "Authorization",
+            "description": "Header",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "Body",
+            "description": "Returns 201 status if is created",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ArticleCreate"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/articles/{slug}": {
+      "get": {
+        "summary": "An article endpoint",
+        "description": "Gets an article",
+        "tags": [
+          "Articles"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "type": "string",
+            "name": "Authorization",
+            "description": "Header",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "slug",
+            "description": "Slug of the article to get",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "summary": "Article update endpoint",
+        "description": "Updates the article",
+        "tags": [
+          "Articles"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "type": "string",
+            "name": "Authorization",
+            "description": "Header",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "slug",
+            "description": "Slug of the article to update",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "Body",
+            "description": "You can send as many article props as you want to update at the same time",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ArticleCreate"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Articles delete endpoint",
+        "description": "Delets an article",
+        "tags": [
+          "Articles"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "type": "string",
+            "name": "Authorization",
+            "description": "Header",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "slug",
+            "description": "Slug of the article to delete",
+            "required": true,
+            "type": "string"
           }
         ],
         "responses": {

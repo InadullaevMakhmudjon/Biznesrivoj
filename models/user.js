@@ -17,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
   User.associate = (models) => {
     User.belongsTo(models.Gender, { as: 'gender' });
     User.belongsTo(models.Role, { as: 'role' });
+    User.hasMany(models.Article, { as: 'articles' });
   };
   return User;
 };
