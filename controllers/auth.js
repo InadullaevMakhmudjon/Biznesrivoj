@@ -12,6 +12,8 @@ function find(where, res, next) {
 
 export default {
   details(req, res) {
+    delete req.user.dataValues.genderId;
+    delete req.user.dataValues.roleId;
     res.status(200).json({ user: req.user });
   },
   login(req, res) {
