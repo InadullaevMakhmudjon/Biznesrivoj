@@ -21,11 +21,15 @@
     },
     {
       "name": "Users",
-      "description": "User enpoints"
+      "description": "User endpoints"
     },
     {
       "name": "Articles",
-      "description": "Article enpoints"
+      "description": "Article endpoints"
+    },
+    {
+      "name": "Categories",
+      "description": "Category endpoints"
     }
   ],
   "definitions": {
@@ -124,6 +128,14 @@
       "type": "object",
       "properties": {
         "metaFields": {
+          "type": "string"
+        }
+      }
+    },
+    "CategoryCreate": {
+      "type": "object",
+      "properties": {
+        "name": {
           "type": "string"
         }
       }
@@ -532,6 +544,154 @@
             "description": "Slug of the article to delete",
             "required": true,
             "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/categories": {
+      "get": {
+        "summary": "All categories endpoint",
+        "description": "Gets all categories",
+        "tags": [
+          "Categories"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "type": "string",
+            "name": "Authorization",
+            "description": "Header",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          }
+        }
+      },
+      "post": {
+        "summary": "Category create endpoint",
+        "description": "Creates a category",
+        "tags": [
+          "Categories"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "type": "string",
+            "name": "Authorization",
+            "description": "Header",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "Body",
+            "description": "Returns 201 status if is created",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CategoryCreate"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
+      }
+    },
+    "/api/categories/{id}": {
+      "get": {
+        "summary": "A category endpoint",
+        "description": "Gets a category",
+        "tags": [
+          "Categories"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "type": "string",
+            "name": "Authorization",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Id of the category to get",
+            "type": "integer",
+            "format": "base64",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "summary": "A category update endpoint",
+        "description": "Updates a category",
+        "tags": [
+          "Categories"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "type": "string",
+            "name": "Authorization",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Id of the category to update",
+            "type": "integer",
+            "format": "base64",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "Body",
+            "description": "Returns 200 if is updated",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CategoryCreate"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "summary": "A category delete endpoint",
+        "description": "Deletes a category",
+        "tags": [
+          "Categories"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Id of the category to delete",
+            "type": "integer",
+            "format": "base64",
+            "required": true
           }
         ],
         "responses": {
