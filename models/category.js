@@ -3,7 +3,13 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
   }, {});
   Category.associate = (models) => {
-    Category.belongsToMany(models.Article, { as: 'articles', through: 'ArticleCategories', foreignKey: 'categoryId' });
+    Category.belongsToMany(models.Article, {
+      onDelete: 'CASCADE',
+      hooks: true,
+      as: 'articles',
+      through: 'ArticleCategories',
+      foreignKey: 'categoryId',
+    });
   };
   return Category;
 };
