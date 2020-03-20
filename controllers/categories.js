@@ -10,4 +10,24 @@ export default {
   getAll(req, res) {
     find(null, res, (data) => res.status(200).json(data));
   },
+  get(req, res) {
+    find({ id: req.params.id }, res, ([data]) => res.status(200).json(data));
+  },
+  create(req, res) {
+    models.Category.create(req.category)
+      .then(() => res.sendStatus(201))
+      .catch((error) => res.status(502).json({ error }));
+  },
+  update(req, res) {
+    models.Category.update(req.category, { where: { id: req.params.id } })
+      .then(() => res.sendStatus(200))
+      .catch((error) => res.status(502).json({ error }));
+  },
+  async delete(req, res) {
+    try {
+      await models.ArticleCategory.destroy({ where: { categoryId: req.params.id }, raw: true });
+      await models.Category.destroy({ where: { id: req.params.id } });
+      res.sendStatus(200);
+    } catch (error) { res.status(502).json({ error }); }
+  },
 };
