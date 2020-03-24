@@ -20,6 +20,10 @@
       "description": "Authontication endpoints"
     },
     {
+      "name": "Home",
+      "description": "Home endpoints"
+    },
+    {
       "name": "Users",
       "description": "User endpoints"
     },
@@ -219,6 +223,28 @@
         "responses": {
           "200": {
             "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/home": {
+      "get": {
+        "summary": "Home endpoint",
+        "description": "Gets necessary data for home view",
+        "tags": [
+          "Home"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "type": "string",
+            "name": "Authorization",
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
           }
         }
       }
