@@ -11,10 +11,8 @@ import './config/passport';
 
 const app = express();
 
-const corsOptions = {
-  origin(origin, callback) {
-    callback(null, true);
-  },
+const corsOptionsDelegate = (req, callback) => {
+  callback(null, { origin: true }); // callback expects two parameters: error and options
 };
 
 app.set('views', join(__dirname, 'views'));
@@ -24,7 +22,7 @@ app.use(logger('dev'));
 app.use(json());
 app.use(urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(cors(corsOptions));
+app.use(cors(corsOptionsDelegate));
 
 app.use('/api/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 indexRouter(app);
