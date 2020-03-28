@@ -10,7 +10,7 @@ import indexRouter from './routes/index';
 import './config/passport';
 
 const app = express();
-const whitelist = ['http://localhost:3000'];
+const whitelist = ['http://localhost:3000', 'http://makhmudjon.me', 'http://dev.makhmudjon.me'];
 const corsOptions = {
   origin(origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
