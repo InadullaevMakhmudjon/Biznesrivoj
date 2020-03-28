@@ -10,6 +10,16 @@ import indexRouter from './routes/index';
 import './config/passport';
 
 const app = express();
+const whitelist = ['http://localhost:3000'];
+const corsOptions = {
+  origin(origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+};
 
 app.set('views', join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -18,7 +28,7 @@ app.use(logger('dev'));
 app.use(json());
 app.use(urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(cors());
+app.use(cors(corsOptions));
 
 app.use('/api/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 indexRouter(app);
