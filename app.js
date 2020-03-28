@@ -11,7 +11,7 @@ import './config/passport';
 
 const app = express();
 
-const whitelist = ['http://localhost:3000', 'http://makhmudjon.me'];
+const whitelist = ['http://localhost:3000', 'http://makhmudjon.me', 'http://dev.makhmudjon.me'];
 const corsOptionsDelegate = (req, callback) => {
   let corsOptions;
   if (whitelist.indexOf(req.header('Origin')) !== -1) {
