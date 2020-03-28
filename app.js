@@ -11,8 +11,15 @@ import './config/passport';
 
 const app = express();
 
+const whitelist = ['http://localhost:3000', 'http://makhmudjon.me'];
 const corsOptionsDelegate = (req, callback) => {
-  callback(null, { origin: true }); // callback expects two parameters: error and options
+  let corsOptions;
+  if (whitelist.indexOf(req.header('Origin')) !== -1) {
+    corsOptions = { origin: true }; // reflect (enable) the requested origin in the CORS response
+  } else {
+    corsOptions = { origin: false }; // disable CORS for this request
+  }
+  callback(null, corsOptions); // callback expects two parameters: error and options
 };
 
 app.set('views', join(__dirname, 'views'));
