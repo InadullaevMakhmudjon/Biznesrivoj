@@ -4,6 +4,7 @@ import { join } from 'path';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
+import helmet from 'helmet';
 import swaggerUI from 'swagger-ui-express';
 import swaggerDocs from './docs';
 import indexRouter from './routes/index';
@@ -32,9 +33,8 @@ app.use(logger('dev'));
 app.use(json());
 app.use(urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(cors({
-  origin: 'http://localhost:3000',
-}));
+app.use(helmet());
+app.use(cors());
 
 app.use('/api/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 indexRouter(app);
