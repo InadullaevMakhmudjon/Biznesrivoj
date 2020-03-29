@@ -11,7 +11,7 @@ import './config/passport';
 
 const app = express();
 
-const whitelist = ['http://84.54.120.157', 'http://localhost:3000', 'http://localhost:8080', 'http://makhmudjon.me', 'http://dev.makhmudjon.me'];
+const whitelist = ['http://84.54.120.157:8080', 'http://localhost:3000', 'http://localhost:8080', 'http://makhmudjon.me', 'http://dev.makhmudjon.me'];
 
 app.set('views', join(__dirname, 'views'));
 app.set('view engine', 'jade');
