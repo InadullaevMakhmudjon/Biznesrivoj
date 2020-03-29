@@ -24,6 +24,7 @@ const corsOptions = {
   },
 };
 
+
 app.set('views', join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
@@ -34,7 +35,7 @@ app.use(cookieParser());
 app.use(cors({
   origin: false,
   methods: ['GET', 'PUT', 'POST'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
+  allowedHeaders: 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers',
 }));
 
 app.use('/api/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
