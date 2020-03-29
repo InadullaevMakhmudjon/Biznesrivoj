@@ -33,7 +33,9 @@ app.use(urlencoded({ extended: false }));
 app.use(cookieParser());
 
 
-app.options('*', cors());
+app.options('*', cors({
+  preflightContinue: true,
+}));
 
 app.use('/api/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 indexRouter(app);
