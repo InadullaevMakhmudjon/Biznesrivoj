@@ -11,6 +11,9 @@ import './config/passport';
 
 const app = express();
 
+app.use(cors());
+app.options('*', cors());
+
 // This is webhook test
 const whitelist = ['http://localhost:3000', 'http://makhmudjon.me', 'http://dev.makhmudjon.me'];
 
@@ -32,13 +35,6 @@ app.use(json());
 app.use(urlencoded({ extended: false }));
 app.use(cookieParser());
 
-
-app.options('*', cors({
-  origin: '*',
-  preflightContinue: true,
-  credentials: true,
-  allowedHeaders: ['Content-Type', 'Authorization'],
-}));
 
 app.use('/api/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 indexRouter(app);
