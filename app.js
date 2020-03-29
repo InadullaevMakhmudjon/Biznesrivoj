@@ -32,12 +32,13 @@ app.use(logger('dev'));
 app.use(json());
 app.use(urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(cors({
-  origin: false,
-  methods: ['GET', 'PUT', 'POST'],
-  allowedHeaders: 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers',
-}));
+app.use(cors());
 
+// {
+//   origin: false,
+//   methods: ['GET', 'PUT', 'POST'],
+//   allowedHeaders: 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers',
+// }
 app.use('/api/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 indexRouter(app);
 
