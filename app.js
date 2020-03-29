@@ -11,6 +11,7 @@ import './config/passport';
 
 const app = express();
 
+// This is webhook test
 const whitelist = ['http://localhost:3000', 'http://makhmudjon.me', 'http://dev.makhmudjon.me'];
 
 const corsOptions = {
