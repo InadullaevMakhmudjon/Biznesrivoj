@@ -1,7 +1,6 @@
 import createError from 'http-errors';
 import express, { json, urlencoded } from 'express';
 import { join } from 'path';
-import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import swaggerUI from 'swagger-ui-express';
@@ -12,24 +11,12 @@ import './config/passport';
 const app = express();
 
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', '*');
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS');
   next();
 });
 
 // This is webhook test
-const whitelist = ['http://localhost:3000', 'http://makhmudjon.me', 'http://dev.makhmudjon.me'];
-
-const corsOptionsDelegate = (req, callback) => {
-  let corsOptions;
-  if (whitelist.indexOf(req.header('Origin')) !== -1) {
-    corsOptions = { origin: true }; // reflect (enable) the requested origin in the CORS response
-  } else {
-    corsOptions = { origin: false }; // disable CORS for this request
-  }
-  callback(null, corsOptions); // callback expects two parameters: error and options
-};
 
 app.set('views', join(__dirname, 'views'));
 app.set('view engine', 'jade');
