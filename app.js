@@ -35,6 +35,7 @@ app.use(cookieParser());
 
 app.options('*', cors({
   preflightContinue: true,
+  allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
 app.use('/api/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
