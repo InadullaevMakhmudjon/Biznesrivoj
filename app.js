@@ -34,6 +34,7 @@ app.use(cookieParser());
 
 
 app.options('*', cors({
+  origin: '*',
   preflightContinue: true,
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
