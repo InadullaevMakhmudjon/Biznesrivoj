@@ -6,6 +6,7 @@ import home from './home';
 
 export default (app) => {
   app.use('/hello', (req, res) => res.status(200).json({ message: 'helloWorld' }));
+  app.use('/dev', (req, res) => res.status(200).json({ message: 'dev' }));
   app.use('/api/auth', auth);
   app.use('/api/users', users);
   app.use('/api/articles', articles);
