@@ -16,7 +16,7 @@ const app = express();
 const whitelist = ['http://localhost:3000', 'http://makhmudjon.me', 'http://dev.makhmudjon.me'];
 
 const corsOptions = {
-  origin(origin, callback) {
+  origin: (origin, callback) => {
     if (whitelist.indexOf(origin) !== -1) {
       callback(null, true);
     } else {
@@ -25,6 +25,7 @@ const corsOptions = {
   },
 };
 
+app.options('*', cors());
 
 app.set('views', join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -34,7 +35,7 @@ app.use(json());
 app.use(urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(helmet());
-app.use(cors());
+app.use(cors(corsOptions));
 
 app.use('/api/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 indexRouter(app);
