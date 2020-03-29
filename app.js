@@ -36,7 +36,7 @@ app.use(cors({
   origin: false,
   methods: ['GET', 'PUT', 'POST'],
   credentials: true,
-  allowedHeaders: 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers',
+  allowedHeaders: 'Access-Control-Allow-Headers,Authorization, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers',
 }));
 
 app.use('/api/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
