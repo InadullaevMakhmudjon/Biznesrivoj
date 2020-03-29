@@ -33,10 +33,7 @@ app.use(json());
 app.use(urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors({
-  origin: false,
-  methods: ['GET', 'PUT', 'POST'],
-  credentials: true,
-  allowedHeaders: 'Access-Control-Allow-Headers,Authorization, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers',
+  origin: 'http://localhost:3000',
 }));
 
 app.use('/api/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
