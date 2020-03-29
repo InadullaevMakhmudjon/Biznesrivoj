@@ -24,16 +24,16 @@ const corsOptionsDelegate = (req, callback) => {
   callback(null, corsOptions); // callback expects two parameters: error and options
 };
 
-app.options('*', cors());
 app.set('views', join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-app.use(cors(corsOptionsDelegate()));
 app.use(logger('dev'));
 app.use(json());
 app.use(urlencoded({ extended: false }));
 app.use(cookieParser());
 
+
+app.options('*', cors());
 
 app.use('/api/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 indexRouter(app);
