@@ -5,7 +5,6 @@ import categories from './categories';
 import home from './home';
 
 export default (app) => {
-  app.use('/hello', (req, res) => res.status(200).json({ message: 'hello' }));
   app.use('/api/auth', auth);
   app.use('/api/users', users);
   app.use('/api/articles', articles);
