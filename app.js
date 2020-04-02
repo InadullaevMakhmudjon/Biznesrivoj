@@ -19,15 +19,7 @@ app.use(logger('dev'));
 app.use(json());
 app.use(urlencoded({ extended: false }));
 app.use(cookieParser());
-
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', req.headers.origin);
-  res.header('Access-Control-Request-Headers', req.headers.origin);
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-  res.header('Access-Control-Allow-Headers', '*');
-  res.header('Access-Control-Allow-Credentials', true);
-  next();
-});
+app.use(cors({ origin: true, credentials: true }));
 
 app.use('/api/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 indexRouter(app);
