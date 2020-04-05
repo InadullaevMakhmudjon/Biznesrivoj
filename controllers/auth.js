@@ -16,6 +16,14 @@ export default {
     delete req.user.dataValues.roleId;
     res.status(200).json({ user: req.user });
   },
+  getToken(req, res) {
+    sign({ userId: 1 }, process.env.JWT_KEY, {}, (error, token) => {
+      if (error) res.sendStatus(501);
+      else {
+        res.status(200).json({ token });
+      }
+    });
+  },
   login(req, res) {
     if (!req.body) res.status(403);
 
