@@ -151,6 +151,21 @@
   ],
   "paths": {
     "/api/auth/login": {
+      "get": {
+        "summary": "User default token endpont",
+        "description": "Returns a token for default user",
+        "tags": [
+          "Auth"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
       "post": {
         "summary": "User login endpoint",
         "description": "Returns a token and updates lastLoggedIn prop to user model",
@@ -715,6 +730,36 @@
             "in": "path",
             "name": "id",
             "description": "Id of the category to delete",
+            "type": "integer",
+            "format": "base64",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/categories/{id}/articles": {
+      "get": {
+        "summary": "Articles of category endpoint",
+        "description": "Gets all articles belongs to the category",
+        "tags": [
+          "Categories"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "type": "string",
+            "name": "Authorization",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Id of the category to get",
             "type": "integer",
             "format": "base64",
             "required": true

@@ -5,7 +5,6 @@ import categories from './categories';
 import home from './home';
 
 export default (app) => {
-  app.use('/test', (req, res) => res.send('Test'));
   app.use('/api/auth', auth);
   app.use('/api/users', users);
   app.use('/api/articles', articles);
