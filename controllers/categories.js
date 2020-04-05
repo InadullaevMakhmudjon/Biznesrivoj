@@ -10,6 +10,16 @@ export default {
   getAll(req, res) {
     find(null, res, (data) => res.status(200).json(data));
   },
+  getArticles(req, res) {
+    models.Category.findByPk(req.params.id, {
+      include: {
+        model: models.Article,
+        as: 'articles',
+        through: { attributes: [] },
+      },
+    }).then((category) => res.status(200).json(category))
+      .catch((error) => res.status(502).json({ error }));
+  },
   get(req, res) {
     find({ id: req.params.id }, res, ([data]) => res.status(200).json(data));
   },
