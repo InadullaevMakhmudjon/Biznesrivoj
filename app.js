@@ -12,6 +12,18 @@ import './config/passport';
 const app = express();
 
 // This is webhook test
+
+const whitelist = ['http://dev.makhmudjon.me'];
+const corsOptions = {
+  origin(origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+};
+
 app.set('views', join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
@@ -19,14 +31,7 @@ app.use(logger('dev'));
 app.use(json());
 app.use(urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', req.headers.origin);
-  res.header('Access-Control-Request-Headers', req.headers.origin);
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-  res.header('Access-Control-Allow-Headers', '*');
-  res.header('Access-Control-Allow-Credentials', true);
-  next();
-});
+app.use(cors());
 app.use('/api/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 indexRouter(app);
 
