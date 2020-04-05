@@ -11,19 +11,6 @@ import './config/passport';
 
 const app = express();
 
-// This is webhook test
-
-const whitelist = ['http://dev.makhmudjon.me'];
-const corsOptions = {
-  origin(origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-};
-
 app.set('views', join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
