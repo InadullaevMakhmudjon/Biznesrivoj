@@ -4,13 +4,14 @@ import article from '../controllers/articles';
 import {
   check, checkUpdate, validate, validateUpdate,
 } from '../utils/validation/article';
+import { isNotUser } from '../middlewares/role';
 
 const router = Router();
 
 router.get('/', passport.authenticate('jwt', { session: false }), article.getAll);
-router.get('/:slug', passport.authenticate('jwt', { session: false }), article.get);
-router.post('/:slug', passport.authenticate('jwt', { session: false }), checkUpdate, validateUpdate, article.update);
-router.post('/', passport.authenticate('jwt', { session: false }), check, validate, article.create);
-router.delete('/:slug', passport.authenticate('jwt', { session: false }), article.delete);
+router.get('/:slug', passport.authenticate('jwt', { session: false }), isNotUser, article.get);
+router.post('/:slug', passport.authenticate('jwt', { session: false }), isNotUser, checkUpdate, validateUpdate, article.update);
+router.post('/', passport.authenticate('jwt', { session: false }), isNotUser, check, validate, article.create);
+router.delete('/:slug', passport.authenticate('jwt', { session: false }), isNotUser, article.delete);
 
 export default router;
