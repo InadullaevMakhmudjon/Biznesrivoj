@@ -17,7 +17,10 @@ module.exports = (sequelize, DataTypes) => {
   Article.associate = (models) => {
     Article.belongsTo(models.User, { as: 'creator', foreignKey: 'UserId' });
     Article.belongsToMany(models.Category, {
-      as: 'categories', through: 'ArticleCategories', foreignKey: 'articleId', onDelete: 'SETNULL', hooks: true,
+      onDelete: 'SETNULL',
+      as: 'categories',
+      through: 'ArticleCategories',
+      foreignKey: 'articleId',
     });
   };
   return Article;

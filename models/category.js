@@ -5,7 +5,6 @@ module.exports = (sequelize, DataTypes) => {
   Category.associate = (models) => {
     Category.belongsToMany(models.Article, {
       onDelete: 'CASCADE',
-      hooks: true,
       as: 'articles',
       through: 'ArticleCategories',
       foreignKey: 'categoryId',

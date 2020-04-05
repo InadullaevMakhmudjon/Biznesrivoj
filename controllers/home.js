@@ -2,32 +2,17 @@ import models from '../models';
 
 export default {
   get(req, res) {
-    Promise.all([
-      models.Category.findAll(),
-      models.Article.findAll({
-        include: [
-          {
-            model: models.User,
-            as: 'creator',
-            attributes: ['fullName', 'phone', 'image', 'quote'],
-            include: [
-              {
-                model: models.Role,
-                as: 'role',
-              },
-              {
-                model: models.Gender,
-                as: 'gender',
-              },
-            ],
-          },
-        ],
-      }),
-    ]).then(([categories, articles]) => {
-      res.status(200).json({
-        home: articles,
-        categories,
-      });
+    models.Category.findAll({
+      include: [
+        {
+          model: models.Article,
+          as: 'articles',
+          through: { attributes: [] },
+        },
+      ],
+    }).then((categories) => {
+      categories.forEach((category) => { category.articles.splice(5, categories.length); });
+      res.status(200).json(categories);
     });
   },
 };
