@@ -6,6 +6,14 @@ module.exports = {
       primaryKey: true,
       type: Sequelize.INTEGER,
     },
+    desc_uz: {
+      allowNull: true,
+      type: Sequelize.STRING,
+    },
+    desc_ru: {
+      allowNull: true,
+      type: Sequelize.STRING,
+    },
     name: {
       type: Sequelize.STRING,
     },
