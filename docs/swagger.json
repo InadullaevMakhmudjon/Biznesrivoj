@@ -141,6 +141,12 @@
       "properties": {
         "name": {
           "type": "string"
+        },
+        "desc_uz": {
+          "type": "string"
+        },
+        "desc_ru": {
+          "type": "string"
         }
       }
     }
@@ -594,6 +600,37 @@
         }
       }
     },
+    "/api/articles/like/{id}": {
+      "post": {
+        "summary": "Article like endpoint",
+        "description": "Increases number of likes the article",
+        "tags": [
+          "Articles"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "type": "string",
+            "name": "Authorization",
+            "description": "Header",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Id of the article to post like",
+            "required": true,
+            "type": "integer",
+            "format": "base64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/categories": {
       "get": {
         "summary": "All categories endpoint",
@@ -745,7 +782,7 @@
     "/api/categories/{id}/articles": {
       "get": {
         "summary": "Articles of category endpoint",
-        "description": "Gets all articles belongs to the category",
+        "description": "Gets all articles belongs to the category. you can give `createdAt`, `likes`, `views` params with values either *ASC* or *DESC* and pagination props `limit` and `page`. *ex:* */articles?likes=ASC, /articles?createdAt=DESC*",
         "tags": [
           "Categories"
         ],
