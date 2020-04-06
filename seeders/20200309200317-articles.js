@@ -14,6 +14,7 @@ module.exports = {
       description_ru: 'DeskRu',
       views: 0,
       likes: 0,
+      createdAt: new Date('01-01-2020'),
     },
     {
       id: 2,
@@ -28,6 +29,7 @@ module.exports = {
       description_ru: 'DeskRu22',
       views: 0,
       likes: 0,
+      createdAt: new Date('02-02-2020'),
     },
   ], {}),
   down: (queryInterface) => queryInterface.bulkDelete('Articles', null, false),

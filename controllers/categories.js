@@ -6,18 +6,34 @@ function find(where, res, next) {
     .catch((error) => res.status(502).json({ error }));
 }
 
+const sort = ({ views, likes, createdAt }, props) => {
+  if (views) return { order: [['views', views]], ...props };
+  if (likes) return { order: [['likes', likes]], ...props };
+  if (createdAt) return { order: [['createdAt', createdAt]], ...props };
+  return { ...props };
+};
+
+const paginate = ({ page, limit, ...others }) => sort(others, ((page && limit) ? {
+  offset: (page - 1) > 0 ? (page - 1) : 0 * limit,
+  limit,
+} : {}));
+
 export default {
   getAll(req, res) {
     find(null, res, (data) => res.status(200).json(data));
   },
   getArticles(req, res) {
-    models.Category.findByPk(req.params.id, {
-      include: {
-        model: models.Article,
-        as: 'articles',
-        through: { attributes: [] },
-      },
-    }).then((category) => res.status(200).json(category))
+    models.Article.findAll({
+      ...paginate(req.query),
+      include: [
+        {
+          model: models.Category,
+          as: 'categories',
+          where: { id: req.params.id },
+          through: { attributes: [] },
+        },
+      ],
+    }).then((articles) => res.status(200).json(articles))
       .catch((error) => res.status(502).json({ error }));
   },
   get(req, res) {

@@ -46,6 +46,11 @@ export default {
   get(req, res) {
     find({ slug: req.params.slug }, res, ([article]) => res.status(200).json(article));
   },
+  like(req, res) {
+    models.Article.increment({ likes: 1 }, { where: { id: req.params.id } })
+      .then(() => res.sendStatus(200))
+      .catch((error) => res.status(502).json({ error }));
+  },
   create(req, res) {
     models.Article.create(req.article)
       .then((article) => {
