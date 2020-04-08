@@ -28,10 +28,10 @@ module.exports = {
       type: Sequelize.STRING,
     },
     body_uz: {
-      type: Sequelize.STRING,
+      type: Sequelize.TEXT,
     },
     body_ru: {
-      type: Sequelize.STRING,
+      type: Sequelize.TEXT,
     },
     description_uz: {
       type: Sequelize.STRING,
