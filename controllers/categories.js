@@ -27,6 +27,9 @@ export default {
       models.ArticleCategory.count({ where: { categoryId: req.params.id } }),
       models.Article.findAll({
         ...paginate(req.query),
+        attributes: {
+          exclude: ['body_uz', 'body_ru'],
+        },
         include: [
           {
             model: models.Category,

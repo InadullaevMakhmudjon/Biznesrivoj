@@ -1,8 +1,11 @@
 import models from '../models';
 
-function find(where, res, next) {
+function find(where, res, next, condition) {
   models.Article.findAll({
     where,
+    attributes: {
+      exclude: condition ? [] : ['body_uz', 'body_ru'],
+    },
     include: [
       {
         model: models.User,
@@ -44,7 +47,7 @@ export default {
     find(null, res, (articles) => res.status(200).json(articles));
   },
   get(req, res) {
-    find({ slug: req.params.slug }, res, ([article]) => res.status(200).json(article));
+    find({ slug: req.params.slug }, res, ([article]) => res.status(200).json(article), 'with_body');
   },
   like(req, res) {
     models.Article.increment({ likes: 1 }, { where: { id: req.params.id } })
