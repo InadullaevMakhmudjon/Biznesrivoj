@@ -14,7 +14,7 @@ const sort = ({ views, likes, createdAt }, props) => {
 };
 
 const paginate = ({ page, limit, ...others }) => sort(others, ((page && limit) ? {
-  offset: (page - 1) > 0 ? (page - 1) : 0 * limit,
+  offset: ((page - 1) > 0 ? (page - 1) : 0) * limit,
   limit,
 } : {}));
 
@@ -23,17 +23,20 @@ export default {
     find(null, res, (data) => res.status(200).json(data));
   },
   getArticles(req, res) {
-    models.Article.findAll({
-      ...paginate(req.query),
-      include: [
-        {
-          model: models.Category,
-          as: 'categories',
-          where: { id: req.params.id },
-          through: { attributes: [] },
-        },
-      ],
-    }).then((articles) => res.status(200).json(articles))
+    Promise.all([
+      models.ArticleCategory.count({ where: { categoryId: req.params.id } }),
+      models.Article.findAll({
+        ...paginate(req.query),
+        include: [
+          {
+            model: models.Category,
+            as: 'categories',
+            where: { id: req.params.id },
+            through: { attributes: [] },
+          },
+        ],
+      }),
+    ]).then(([total, data]) => res.status(200).json({ total, data }))
       .catch((error) => res.status(502).json({ error }));
   },
   get(req, res) {
