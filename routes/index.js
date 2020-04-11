@@ -3,6 +3,7 @@ import users from './users';
 import articles from './articles';
 import categories from './categories';
 import home from './home';
+import models from '../models';
 
 export default (app) => {
   app.use('/api/auth', auth);
