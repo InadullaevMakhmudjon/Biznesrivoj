@@ -65,3 +65,4 @@ backups
 .dockerignore
 docker-compose.yml
 dockerfile
+docker.env
