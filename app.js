@@ -1,6 +1,6 @@
 import createError from 'http-errors';
 import express, { json, urlencoded } from 'express';
-import { join } from 'path';
+import { join, resolve } from 'path';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
@@ -19,12 +19,13 @@ app.use(json());
 app.use(urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors());
+app.use(express.static(join(__dirname, './client')));
 app.use('/api/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 indexRouter(app);
 
 // catch 404 and forward to error handler
-app.use((req, res, next) => {
-  next(createError(404));
+app.get('/*', (req, res) => {
+  res.sendFile(`${resolve(__dirname)}/client/index.html`);
 });
 
 // error handler
