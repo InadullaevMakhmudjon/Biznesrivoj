@@ -61,3 +61,7 @@ typings/
 .next
 
 backups
+
+.dockerignore
+docker-compose.yml
+dockerfile

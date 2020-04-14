@@ -25,7 +25,7 @@ export default {
     });
   },
   login(req, res) {
-    if (!req.body) res.status(403);
+    if (!req.body) res.status(401).json({ message: 'Please fill the form' });
 
     const { phone, password } = req.body;
     find({ phone }, res, ([user]) => {
@@ -38,8 +38,8 @@ export default {
                 .then(() => res.status(200).json({ token }));
             }
           });
-        } else { res.sendStatus(403); }
-      } else { res.sendStatus(403); }
+        } else { res.status(401).json({ message: 'Password is incorrect' }); }
+      } else { res.status(401).json({ message: 'Phone is not registered yet' }); }
     });
   },
   logout(req, res) {
