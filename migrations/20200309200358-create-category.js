@@ -10,7 +10,7 @@ module.exports = {
       allowNull: true,
       type: Sequelize.STRING,
     },
-    desc_ru: {
+    desc_kr: {
       allowNull: true,
       type: Sequelize.STRING,
     },

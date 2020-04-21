@@ -24,19 +24,19 @@ module.exports = {
     title_uz: {
       type: Sequelize.STRING,
     },
-    title_ru: {
+    title_kr: {
       type: Sequelize.STRING,
     },
     body_uz: {
       type: Sequelize.TEXT,
     },
-    body_ru: {
+    body_kr: {
       type: Sequelize.TEXT,
     },
     description_uz: {
       type: Sequelize.STRING,
     },
-    description_ru: {
+    description_kr: {
       type: Sequelize.STRING,
     },
     views: {
