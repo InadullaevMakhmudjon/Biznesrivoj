@@ -19,14 +19,20 @@ app.use(json());
 app.use(urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors());
-app.use(express.static(join(__dirname, './client')));
+// app.use(express.static(join(__dirname, './client')));
 app.use('/api/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 indexRouter(app);
 
 // catch 404 and forward to error handler
+app.use((_, __, next) => {
+  next(createError(404));
+});
+
+/*
 app.get('/*', (req, res) => {
   res.sendFile(`${resolve(__dirname)}/client/index.html`);
 });
+*/
 
 // error handler
 app.use((err, req, res, next) => {
