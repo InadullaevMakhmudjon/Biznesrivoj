@@ -1,22 +1,11 @@
 import models from '../models';
+import { paginate, categoryArticleSort as sort } from '../utils/pagination';
 
 function find(where, res, next) {
   models.Category.findAll({ where })
     .then((data) => next(data))
     .catch((error) => res.status(502).json({ error }));
 }
-
-const sort = ({ views, likes, createdAt }, props) => {
-  if (views) return { order: [['views', views]], ...props };
-  if (likes) return { order: [['likes', likes]], ...props };
-  if (createdAt) return { order: [['createdAt', createdAt]], ...props };
-  return { ...props };
-};
-
-const paginate = ({ page, limit, ...others }) => sort(others, ((page && limit) ? {
-  offset: ((page - 1) > 0 ? (page - 1) : 0) * limit,
-  limit,
-} : {}));
 
 export default {
   getAll(req, res) {
@@ -27,6 +16,7 @@ export default {
       models.ArticleCategory.count({ where: { categoryId: req.params.id } }),
       models.Article.findAll({
         ...paginate(req.query),
+        ...sort(req.query),
         attributes: {
           exclude: ['body_uz', 'body_ru'],
         },
