@@ -1,4 +1,5 @@
 import models from '../models';
+import { paginate } from '../utils/pagination';
 
 function find(where, res, next, condition) {
   models.Article.findAll({
@@ -42,9 +43,30 @@ function find(where, res, next, condition) {
     .catch((error) => res.status(502).json({ error }));
 }
 
+function getUserOwn({ user, query }, res, next) {
+  const where = user.role.id === 1 ? null : { UserId: user.id };
+  Promise.all([
+    models.Article.count({ where }),
+    models.Article.findAll({
+      where,
+      ...paginate(query),
+      include: [
+        {
+          model: models.Category,
+          as: 'categories',
+          through: { attributes: [] },
+        },
+      ],
+    }),
+  ]).then(([total, data]) => next(total, data))
+    .catch((error) => res.status(502).json({ error }));
+}
+
 export default {
   getAll(req, res) {
-    find(null, res, (articles) => res.status(200).json(articles));
+    const { own } = req.query;
+    if (own) getUserOwn(req, res, (total, data) => res.status(200).json({ total, data }));
+    else find(null, res, (articles) => res.status(200).json(articles));
   },
   get(req, res) {
     find({ slug: req.params.slug }, res, ([article]) => res.status(200).json(article), 'with_body');
