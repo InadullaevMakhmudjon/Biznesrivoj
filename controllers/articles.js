@@ -1,5 +1,5 @@
 import models from '../models';
-import { paginate } from '../utils/pagination';
+import { paginate, categoryArticleSort as sort } from '../utils/pagination';
 
 function find(query, where, res, next, condition) {
   Promise.all([
@@ -7,6 +7,7 @@ function find(query, where, res, next, condition) {
     models.Article.findAll({
       where,
       ...paginate(query),
+      ...sort(query),
       attributes: {
         exclude: condition ? [] : ['body_uz', 'body_ru'],
       },
