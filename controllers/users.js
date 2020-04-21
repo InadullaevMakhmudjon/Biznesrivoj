@@ -1,4 +1,5 @@
 import models from '../models';
+import { paginate } from '../utils/pagination';
 
 function find(where, res, next) {
   models.User.findAll({
@@ -37,10 +38,23 @@ export default {
     });
   },
   getArticles(req, res) {
-    models.Article.findAll({ where: { UserId: req.params.id }, include: [{ model: models.Category, as: 'categories', through: { attributes: [] } }] })
-      .then((articles) => {
-        articles.forEach((article) => { delete article.dataValues.UserId; });
-        res.status(200).json(articles);
+    Promise.all([
+      models.Article.count({ where: { UserId: req.params.id } }),
+      models.Article.findAll({
+        where: { UserId: req.params.id },
+        ...paginate(req.query),
+        include: [
+          {
+            model: models.Category,
+            as: 'categories',
+            through: { attributes: [] },
+          },
+        ],
+      }),
+    ])
+      .then(([total, data]) => {
+        data.forEach((article) => { delete article.dataValues.UserId; });
+        res.status(200).json({ total, data });
       });
   },
   update(req, res) {

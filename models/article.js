@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
     metaFields: DataTypes.STRING,
     slug: DataTypes.STRING,
     title_uz: DataTypes.STRING,
-    title_ru: DataTypes.STRING,
+    title_kr: DataTypes.STRING,
     body_uz: DataTypes.TEXT,
     body_ru: DataTypes.TEXT,
     description_uz: DataTypes.STRING,
