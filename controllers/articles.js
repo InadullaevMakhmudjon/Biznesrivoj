@@ -1,44 +1,48 @@
 import models from '../models';
 import { paginate } from '../utils/pagination';
 
-function find(where, res, next, condition) {
-  models.Article.findAll({
-    where,
-    attributes: {
-      exclude: condition ? [] : ['body_uz', 'body_ru'],
-    },
-    include: [
-      {
-        model: models.User,
-        as: 'creator',
-        attributes: {
-          exclude: ['password'],
+function find(query, where, res, next, condition) {
+  Promise.all([
+    models.Article.count({ where }),
+    models.Article.findAll({
+      where,
+      ...paginate(query),
+      attributes: {
+        exclude: condition ? [] : ['body_uz', 'body_ru'],
+      },
+      include: [
+        {
+          model: models.User,
+          as: 'creator',
+          attributes: {
+            exclude: ['password'],
+          },
+          include: [
+            {
+              model: models.Role,
+              as: 'role',
+            },
+            {
+              model: models.Gender,
+              as: 'gender',
+            },
+          ],
         },
-        include: [
-          {
-            model: models.Role,
-            as: 'role',
-          },
-          {
-            model: models.Gender,
-            as: 'gender',
-          },
-        ],
-      },
-      {
-        model: models.Category,
-        as: 'categories',
-        through: { attributes: [] },
-      },
-    ],
-  })
-    .then((articles) => {
+        {
+          model: models.Category,
+          as: 'categories',
+          through: { attributes: [] },
+        },
+      ],
+    }),
+  ])
+    .then(([total, articles]) => {
       articles.forEach((article) => {
         delete article.dataValues.UserId;
         delete article.creator.dataValues.genderId;
         delete article.creator.dataValues.roleId;
       });
-      next(articles);
+      next({ total, data: articles });
     })
     .catch((error) => res.status(502).json({ error }));
 }
@@ -66,10 +70,12 @@ export default {
   getAll(req, res) {
     const { own } = req.query;
     if (own) getUserOwn(req, res, (total, data) => res.status(200).json({ total, data }));
-    else find(null, res, (articles) => res.status(200).json(articles));
+    else find(req.query, null, res, (articles) => res.status(200).json(articles));
   },
   get(req, res) {
-    find({ slug: req.params.slug }, res, ([article]) => res.status(200).json(article), 'with_body');
+    models.Article.findOne({ slug: req.params.slug })
+      .then((article) => res.status(200).json(article))
+      .catch((err) => res.status(502).json(err));
   },
   like(req, res) {
     models.Article.increment({ likes: 1 }, { where: { id: req.params.id } })
