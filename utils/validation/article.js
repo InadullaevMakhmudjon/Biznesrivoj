@@ -6,11 +6,11 @@ export const check = checkSchema({
   metaFields: { isString: true },
   slug: { isString: true },
   title_uz: { isString: true },
-  title_ru: { isString: true },
+  title_kr: { isString: true },
   body_uz: { isString: true },
-  body_ru: { isString: true },
+  body_kr: { isString: true },
   description_uz: { isString: true },
-  description_ru: { isString: true },
+  description_kr: { isString: true },
   categories: { isArray: true },
 });
 
@@ -26,11 +26,11 @@ export const checkUpdate = checkSchema({
   metaFields: { isString: true, optional: true },
   slug: { isString: true, optional: true },
   title_uz: { isString: true, optional: true },
-  title_ru: { isString: true, optional: true },
+  title_kr: { isString: true, optional: true },
   body_uz: { isString: true, optional: true },
-  body_ru: { isString: true, optional: true },
+  body_kr: { isString: true, optional: true },
   description_uz: { isString: true, optional: true },
-  description_ru: { isString: true, optional: true },
+  description_kr: { isString: true, optional: true },
   categories: { isArray: true, optional: true },
 });
 
@@ -44,11 +44,11 @@ export const validate = (req, res, next) => {
       metaFields: req.body.metaFields,
       slug: req.body.slug,
       title_uz: req.body.title_uz,
-      title_ru: req.body.title_ru,
+      title_kr: req.body.title_kr,
       body_uz: req.body.body_uz,
-      body_ru: req.body.body_ru,
+      body_kr: req.body.body_kr,
       description_uz: req.body.description_uz,
-      description_ru: req.body.description_ru,
+      description_kr: req.body.description_kr,
       categories: req.body.categories,
     };
     next();

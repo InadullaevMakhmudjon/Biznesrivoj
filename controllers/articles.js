@@ -74,8 +74,17 @@ export default {
     else find(req.query, null, res, (articles) => res.status(200).json(articles));
   },
   get(req, res) {
-    models.Article.findOne({ slug: req.params.slug })
-      .then((article) => res.status(200).json(article))
+    models.Article.findOne({
+      where: { slug: req.params.slug },
+      include: [
+        {
+          model: models.Category,
+          as: 'categories',
+          through: { attributes: [] },
+        },
+      ],
+    })
+      .then((article) => (article ? res.status(200).json(article) : res.status(404).json({ message: 'Given slug is not exist' })))
       .catch((err) => res.status(502).json(err));
   },
   like(req, res) {
