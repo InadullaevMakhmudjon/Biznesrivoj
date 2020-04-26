@@ -102,7 +102,10 @@ export default {
   update(req, res) {
     models.Article.update(req.article, { where: { slug: req.params.slug } })
       .then(async () => {
-        const article = await models.Article.findOne({ where: { slug: req.params.slug }, include: [{ model: models.Category, as: 'categories' }] });
+        const article = await models.Article.findOne({
+          where: { slug: req.article.slug === req.params.slug ? req.params.slug : req.article.slug },
+          include: [{ model: models.Category, as: 'categories' }],
+        });
         if (req.article.categories) {
           await article.removeCategories(article.categories);
           await article.setCategories(req.article.categories);
