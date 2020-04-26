@@ -18,11 +18,7 @@ app.use(logger('dev'));
 app.use(json());
 app.use(urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(cors({
-  origin: (origin, cb) => cb(null, true),
-  credentials: true
- })
-);
+app.use(cors());
 // app.use(express.static(join(__dirname, './client')));
 app.use('/api/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 indexRouter(app);
