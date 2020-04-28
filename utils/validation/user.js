@@ -104,7 +104,8 @@ export const validate = (req, res, next) => {
     res.status(403).json(errors.array());
   } else {
     req.newUser = {
-      fullName: req.body.fullName,
+      firstname: req.body.firstname,
+      secondname: req.body.secondname,
       phone: req.body.phone,
       password: hashSync(req.body.password, 7),
       genderId: req.body.genderId,
