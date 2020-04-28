@@ -4,7 +4,8 @@ module.exports = {
   up: (queryInterface) => queryInterface.bulkInsert('Users', [
     {
       id: 1,
-      fullName: 'User',
+      firstname: 'User',
+      secondname: 'User',
       phone: '-',
       password: '-',
       genderId: 1,
@@ -16,7 +17,8 @@ module.exports = {
     },
     {
       id: 2,
-      fullName: 'Admin',
+      firstname: 'Admin',
+      secondname: 'Admin',
       phone: '+998123456789',
       password: hashSync('admin', 7),
       genderId: 1,
