@@ -4,7 +4,10 @@ import models from '../../models';
 import { exists } from '../check';
 
 export const check = checkSchema({
-  fullName: {
+  firstname: {
+    isString: true,
+  },
+  secondname: {
     isString: true,
   },
   phone: {
@@ -44,7 +47,11 @@ export const check = checkSchema({
 });
 
 export const checkUpdate = checkSchema({
-  fullName: {
+  firstname: {
+    isString: true,
+    optional: true,
+  },
+  secondname: {
     isString: true,
     optional: true,
   },
