@@ -51,7 +51,10 @@
     "UserCreate": {
       "type": "object",
       "properties": {
-        "fullName": {
+        "firstname": {
+          "type": "string"
+        },
+        "secondname": {
           "type": "string"
         },
         "phone": {
@@ -82,7 +85,10 @@
     "UserUpdate": {
       "type": "object",
       "properties": {
-        "fullName": {
+        "firstname": {
+          "type": "string"
+        },
+        "secondname": {
           "type": "string"
         }
       }
