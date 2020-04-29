@@ -1,5 +1,6 @@
 import models from '../models';
 import { paginate } from '../utils/pagination';
+import { viewed } from './articles';
 
 function find(where, res, next) {
   models.User.findAll({
@@ -52,7 +53,8 @@ export default {
         ],
       }),
     ])
-      .then(([total, data]) => {
+      .then(async ([total, data]) => {
+        await viewed(data);
         data.forEach((article) => { delete article.dataValues.UserId; });
         res.status(200).json({ total, data });
       });

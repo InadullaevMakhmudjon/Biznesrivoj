@@ -1,5 +1,6 @@
 import models from '../models';
 import { paginate, categoryArticleSort as sort } from '../utils/pagination';
+import { viewed } from './articles';
 
 function find(where, res, next) {
   models.Category.findAll({ where })
@@ -29,7 +30,10 @@ export default {
           },
         ],
       }),
-    ]).then(([total, data]) => res.status(200).json({ total, data }))
+    ]).then(async ([total, data]) => {
+      await viewed(data);
+      res.status(200).json({ total, data });
+    })
       .catch((error) => res.status(502).json({ error }));
   },
   get(req, res) {

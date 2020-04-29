@@ -1,6 +1,14 @@
 import models from '../models';
 import { paginate, categoryArticleSort as sort } from '../utils/pagination';
 
+export function viewed(articles) {
+  const tasks = articles.map(({ id }) => new Promise((res, rej) => {
+    models.Article.increment({ views: 1 }, { where: { id } })
+      .then(() => res()).catch((error) => rej(error));
+  }));
+  return Promise.all(tasks);
+}
+
 function find(query, where, res, next, condition) {
   Promise.all([
     models.Article.count({ where }),
@@ -37,7 +45,8 @@ function find(query, where, res, next, condition) {
       ],
     }),
   ])
-    .then(([total, articles]) => {
+    .then(async ([total, articles]) => {
+      await viewed(articles);
       articles.forEach((article) => {
         delete article.dataValues.UserId;
         delete article.creator.dataValues.genderId;
@@ -63,7 +72,10 @@ function getUserOwn({ user, query }, res, next) {
         },
       ],
     }),
-  ]).then(([total, data]) => next(total, data))
+  ]).then(async ([total, data]) => {
+    await viewed(data);
+    next(total, data);
+  })
     .catch((error) => res.status(502).json({ error }));
 }
 
@@ -84,7 +96,14 @@ export default {
         },
       ],
     })
-      .then((article) => (article ? res.status(200).json(article) : res.status(404).json({ message: 'Given slug is not exist' })))
+      .then(async (article) => {
+        if (article) {
+          await viewed([article]);
+          res.status(200).json(article);
+        } else {
+          res.status(404).json({ message: 'Given slug is not exist' });
+        }
+      })
       .catch((err) => res.status(502).json(err));
   },
   like(req, res) {
