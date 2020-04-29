@@ -59,7 +59,7 @@ export default {
       const path = `./files/${file.url.split('/')[2]}`;
       fs.unlink(path, () => {
         models.File.destroy({ where: { id: req.params.id } })
-          .then((item) => res.status(200))
+          .then(() => res.sendStatus(200))
           .catch((error) => res.status(502).json(error));
       });
     });

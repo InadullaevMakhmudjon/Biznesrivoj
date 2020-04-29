@@ -34,6 +34,10 @@
     {
       "name": "Categories",
       "description": "Category endpoints"
+    },
+    {
+      "name": "Files",
+      "description": "File endpoints"
     }
   ],
   "definitions": {
@@ -806,6 +810,142 @@
             "type": "integer",
             "format": "base64",
             "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/files": {
+      "get": {
+        "summary": "All files endpoint",
+        "description": "Gets All files",
+        "tags": [
+          "Files"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "type": "string",
+            "name": "Authorization",
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
+      },
+      "post": {
+        "summary": "File create endpoint",
+        "description": "Creates a file",
+        "tags": [
+          "Files"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "type": "string",
+            "name": "Authorization",
+            "required": true
+          },
+          {
+            "in": "formData",
+            "type": "file",
+            "name": "file",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/files/{id}": {
+      "delete": {
+        "summary": "File delete endpoint",
+        "description": "Delets a File",
+        "tags": [
+          "Files"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "type": "string",
+            "name": "Authorization",
+            "description": "Header",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Id of the user to delete",
+            "required": true,
+            "type": "integer",
+            "format": "base64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/files/today": {
+      "get": {
+        "summary": "All files created today endpoint",
+        "description": "Gets all files created today",
+        "tags": [
+          "Files"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "type": "string",
+            "name": "Authorization",
+            "description": "Header",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/files/id/{id}": {
+      "get": {
+        "summary": "A file endpoint",
+        "description": "Gets a File",
+        "tags": [
+          "Files"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "type": "string",
+            "name": "Authorization",
+            "description": "Header",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Id of the user to delete",
+            "required": true,
+            "type": "integer",
+            "format": "base64"
           }
         ],
         "responses": {
