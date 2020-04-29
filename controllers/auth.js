@@ -31,7 +31,7 @@ export default {
     find({ phone }, res, ([user]) => {
       if (user) {
         if (compareSync(password, user.password)) {
-          sign({ userId: user.id }, process.env.JWT_KEY, {}, (error, token) => {
+          sign({ userId: user.id }, process.env.JWT_KEY, { expiresIn: '12h' }, (error, token) => {
             if (error) res.sendStatus(501);
             else {
               models.User.update({ lastLoggedIn: new Date() }, { where: { id: user.id } })
