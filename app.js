@@ -1,10 +1,11 @@
 import createError from 'http-errors';
 import express, { json, urlencoded } from 'express';
-import { join, resolve } from 'path';
+import { join } from 'path';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import swaggerUI from 'swagger-ui-express';
+import fileUpload from 'express-fileupload';
 import swaggerDocs from './docs';
 import indexRouter from './routes/index';
 import './config/passport';
@@ -19,8 +20,10 @@ app.use(json());
 app.use(urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors());
+app.use(fileUpload({ limits: { fileSize: 50 * 1024 * 1024 } }));
 // app.use(express.static(join(__dirname, './client')));
 app.use('/api/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
+app.use('/files', express.static('files'));
 indexRouter(app);
 
 // catch 404 and forward to error handler
