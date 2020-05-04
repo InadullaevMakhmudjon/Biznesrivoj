@@ -1,5 +1,5 @@
 import models from '../models';
-import { paginate, categoryArticleSort as sort } from '../utils/pagination';
+import { paginate, dynamicSort as sort, types } from '../utils/pagination';
 
 export function viewed(articles) {
   const tasks = articles.map(({ id }) => new Promise((res, rej) => {
@@ -15,7 +15,7 @@ function find(query, where, res, next, condition) {
     models.Article.findAll({
       where,
       ...paginate(query),
-      ...sort(query),
+      ...sort(query, types.ARTICLE),
       attributes: {
         exclude: condition ? [] : ['body_uz', 'body_ru'],
       },

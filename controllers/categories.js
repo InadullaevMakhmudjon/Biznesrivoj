@@ -1,5 +1,5 @@
 import models from '../models';
-import { paginate, categoryArticleSort as sort } from '../utils/pagination';
+import { paginate, dynamicSort as sort, types } from '../utils/pagination';
 import { viewed } from './articles';
 
 function find(where, res, next) {
@@ -17,7 +17,7 @@ export default {
       models.ArticleCategory.count({ where: { categoryId: req.params.id } }),
       models.Article.findAll({
         ...paginate(req.query),
-        ...sort(req.query),
+        ...sort(req.query, types.ARTICLE),
         attributes: {
           exclude: ['body_uz', 'body_ru'],
         },
