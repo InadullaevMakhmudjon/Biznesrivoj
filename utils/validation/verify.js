@@ -1,10 +1,13 @@
 import { checkSchema, validationResult } from 'express-validator/check';
+import { modifiedExist } from '../check';
+import models from '../../models';
 
 const phone = {
-  matches: {
-    options: [/^\+9989[012345789][0-9]{7}$/],
+  isString: true,
+  custom: {
+    options: (phone) => modifiedExist(models.User, { phone }, true),
+    errorMessage: 'Phone already exist',
   },
-  errorMessage: 'This is not looks like phone',
 };
 
 export const check = checkSchema({ phone });
