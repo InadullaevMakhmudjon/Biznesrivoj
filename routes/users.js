@@ -9,6 +9,7 @@ import { isNotUser } from '../middlewares/role';
 const router = Router();
 
 router.get('/', passport.authenticate('jwt', { session: false }), user.getAll);
+router.get('/editors', passport.authenticate('jwt', { session: false }), user.getAllEditors);
 router.get('/:id', passport.authenticate('jwt', { session: false }), user.get);
 router.get('/:id/articles', passport.authenticate('jwt', { session: false }), user.getArticles);
 router.post('/', passport.authenticate('jwt', { session: false }), check, validate, user.create);
