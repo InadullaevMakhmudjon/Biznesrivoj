@@ -1,7 +1,6 @@
-import moment from 'moment';
 import fs from 'fs';
 import models from '../models';
-import { paginate, sortByCreatedAt as sort } from '../utils/pagination';
+import { paginate, dynamicSort as sort } from '../utils/pagination';
 
 require('dotenv').config();
 
@@ -13,7 +12,7 @@ function find(where, query, res) {
     models.File.findAll({
       where,
       ...paginate(query),
-      ...sort(query),
+      ...sort(query, ['createdAt']),
     }),
   ]).then(([total, data]) => res.status(200).json({ total, data }))
     .catch((error) => res.status(502).json(error));
