@@ -19,7 +19,7 @@ module.exports = {
       id: 2,
       firstname: 'Admin',
       secondname: 'Admin',
-      phone: '+998123456789',
+      phone: '+998994287668',
       password: hashSync('admin', 7),
       genderId: 1,
       image: 'https://visualpharm.com/assets/314/Admin-595b40b65ba036ed117d36fe.svg',
