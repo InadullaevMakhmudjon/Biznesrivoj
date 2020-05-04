@@ -6,9 +6,9 @@ export async function exists(model, object, invert) {
   return invert ? !result : result;
 }
 
-export async function modifiedExist(model, where) {
+export async function modifiedExist(model, where, invert) {
   const user = await model.findOne({ where, attributes: ['id'], raw: true });
-  return !!user;
+  return invert ? !user : !!user;
 }
 
 export default '';

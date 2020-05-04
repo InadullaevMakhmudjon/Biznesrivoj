@@ -38,6 +38,10 @@
     {
       "name": "Files",
       "description": "File endpoints"
+    },
+    {
+      "name": "Verify",
+      "description": "Verification endpoints"
     }
   ],
   "definitions": {
@@ -156,6 +160,27 @@
           "type": "string"
         },
         "desc_ru": {
+          "type": "string"
+        }
+      }
+    },
+    "VerificationSend": {
+      "type": "object",
+      "properties": {
+        "phone": {
+          "type": "string",
+          "example": "+998123456789"
+        }
+      }
+    },
+    "Verify": {
+      "type": "object",
+      "properties": {
+        "phone": {
+          "type": "string",
+          "example": "+998123456789"
+        },
+        "code": {
           "type": "string"
         }
       }
@@ -324,6 +349,29 @@
             "schema": {
               "$ref": "#/definitions/UserCreate"
             }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/users/editors": {
+      "get": {
+        "summary": "All editor users endpoint",
+        "description": "Gets all editors",
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "type": "string",
+            "name": "Authorization",
+            "description": "Header",
+            "required": true
           }
         ],
         "responses": {
@@ -571,7 +619,7 @@
             "description": "You can send as many article props as you want to update at the same time",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/ArticleCreate"
+              "$ref": "#/definitions/ArticleUpdate"
             }
           }
         ],
@@ -946,6 +994,70 @@
             "required": true,
             "type": "integer",
             "format": "base64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/verify/send": {
+      "post": {
+        "summary": "Send verification code endpoint",
+        "description": "Sends a verification code to the phone number, `!Only 5 times attempts are allowed`",
+        "tags": [
+          "Verify"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "type": "string",
+            "name": "Authorization",
+            "description": "Header",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "Body",
+            "description": "Exist phone number and respect password required",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/VerificationSend"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/verify": {
+      "post": {
+        "summary": "Verify phone number endpoint",
+        "description": "Verifies phone number by sent code",
+        "tags": [
+          "Verify"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "type": "string",
+            "name": "Authorization",
+            "description": "Header",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "Body",
+            "description": "Exist phone number and respect password required",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Verify"
+            }
           }
         ],
         "responses": {
