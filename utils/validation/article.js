@@ -5,6 +5,7 @@ import { exists } from '../check';
 export const check = checkSchema({
   metaFields: { isString: true },
   slug: { isString: true },
+  image: { isString: true },
   title_uz: { isString: true },
   title_kr: { isString: true },
   body_uz: { isString: true },
@@ -30,6 +31,7 @@ export const checkUpdate = checkSchema({
   body_uz: { isString: true, optional: true },
   body_kr: { isString: true, optional: true },
   description_uz: { isString: true, optional: true },
+  image: { isString: true, optional: true },
   description_kr: { isString: true, optional: true },
   categories: { isArray: true, optional: true },
 });
@@ -50,6 +52,7 @@ export const validate = (req, res, next) => {
       description_uz: req.body.description_uz,
       description_kr: req.body.description_kr,
       categories: req.body.categories,
+      image: req.body.image,
     };
     next();
   }
