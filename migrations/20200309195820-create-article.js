@@ -33,6 +33,9 @@ module.exports = {
     body_kr: {
       type: Sequelize.TEXT,
     },
+    image: {
+      type: Sequelize.STRING,
+    },
     description_uz: {
       type: Sequelize.STRING,
     },

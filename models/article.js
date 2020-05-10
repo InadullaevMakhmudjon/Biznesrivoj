@@ -2,6 +2,7 @@
 module.exports = (sequelize, DataTypes) => {
   const Article = sequelize.define('Article', {
     UserId: DataTypes.INTEGER,
+    image: DataTypes.STRING,
     metaFields: DataTypes.STRING,
     slug: DataTypes.STRING,
     title_uz: DataTypes.STRING,
