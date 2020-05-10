@@ -107,6 +107,10 @@
         "metaFields": {
           "type": "string"
         },
+        "image": {
+          "type": "string",
+          "description": "Image should be link"
+        },
         "slug": {
           "type": "string",
           "description": "Slug should be unique"
@@ -187,8 +191,8 @@
     }
   },
   "schemes": [
-    "http",
-    "https"
+    "https",
+    "http"
   ],
   "paths": {
     "/api/auth/login": {
@@ -513,7 +517,7 @@
     "/api/articles": {
       "get": {
         "summary": "All articles endpoint",
-        "description": "Gets all articles",
+        "description": "Gets all articles. you can give `createdAt`, `likes`, `views` params with values either *ASC* or *DESC* and pagination props `limit` and `page`. *ex:* */articles?likes=ASC, /articles?createdAt=DESC*",
         "tags": [
           "Articles"
         ],
