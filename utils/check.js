@@ -10,5 +10,3 @@ export async function modifiedExist(model, where, invert) {
   const user = await model.findOne({ where, attributes: ['id'], raw: true });
   return invert ? !user : !!user;
 }
-
-export default '';
