@@ -1,6 +1,7 @@
 import models from '../models';
 import { paginate, dynamicSort as sort, types } from '../utils/pagination';
 import { viewed } from './articles';
+import { getUserBookmarks } from './bookmarks';
 
 function find(query, where, res, next) {
   Promise.all([
@@ -83,4 +84,5 @@ export default {
       .then(() => res.sendStatus(200))
       .catch((error) => res.status(502).json(error));
   },
+  getBookmarks: getUserBookmarks,
 };
