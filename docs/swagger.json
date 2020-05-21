@@ -1168,7 +1168,7 @@
           {
             "in": "path",
             "name": "id",
-            "description": "Id of the user to delete",
+            "description": "Id of the bookmark to get",
             "required": true,
             "type": "integer",
             "format": "base64"
@@ -1197,7 +1197,7 @@
           {
             "in": "path",
             "name": "id",
-            "description": "Id of the user to delete",
+            "description": "Id of the article to make bookmark",
             "required": true,
             "type": "integer",
             "format": "base64"
@@ -1226,7 +1226,7 @@
           {
             "in": "path",
             "name": "id",
-            "description": "Id of the user to delete",
+            "description": "Id of the bookmark to delete",
             "required": true,
             "type": "integer",
             "format": "base64"
@@ -1257,7 +1257,7 @@
           {
             "in": "path",
             "name": "id",
-            "description": "Id of the user to delete",
+            "description": "Id of the user to get all bookmarks",
             "required": true,
             "type": "integer",
             "format": "base64"
@@ -1288,7 +1288,7 @@
           {
             "in": "path",
             "name": "id",
-            "description": "Id of the user to delete",
+            "description": "Id of the article to get all bookmarks",
             "required": true,
             "type": "integer",
             "format": "base64"
