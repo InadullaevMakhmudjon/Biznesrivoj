@@ -42,6 +42,10 @@
     {
       "name": "Verify",
       "description": "Verification endpoints"
+    },
+    {
+      "name": "Bookmarks",
+      "description": "Bookmarks endpoints"
     }
   ],
   "definitions": {
@@ -486,7 +490,38 @@
     "/api/users/{id}/articles": {
       "get": {
         "summary": "Articles of the user",
-        "description": "Gers all articles belong to the user",
+        "description": "Gets all articles belong to the user",
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "type": "string",
+            "name": "Authorization",
+            "description": "Header",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Id of the user to get",
+            "required": true,
+            "type": "integer",
+            "format": "base64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/users/{id}/bookmarks": {
+      "get": {
+        "summary": "Bookmarks of the user",
+        "description": "Gets all bookmarks belong to the user, is not accessible for default user",
         "tags": [
           "Users"
         ],
@@ -1062,6 +1097,201 @@
             "schema": {
               "$ref": "#/definitions/Verify"
             }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/bookmarks": {
+      "get": {
+        "summary": "All bookmarks endpoint",
+        "description": "Gets all bookmarks belong to the user given token. you can give `createdAt` params with values either *ASC* or *DESC* and pagination props `limit` and `page`. *ex:* /articles?createdAt=DESC*",
+        "tags": [
+          "Bookmarks"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "type": "string",
+            "name": "Authorization",
+            "description": "Header",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete all bookmarks endpoint",
+        "description": "Deletes all bookmarks belong to the user given token, usage for clear bookmarks",
+        "tags": [
+          "Bookmarks"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "type": "string",
+            "name": "Authorization",
+            "description": "Header",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/bookmarks/{id}": {
+      "get": {
+        "summary": "a bookmark endpoint",
+        "description": "Gets a bookmark on given id",
+        "tags": [
+          "Bookmarks"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "type": "string",
+            "name": "Authorization",
+            "description": "Header",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Id of the user to delete",
+            "required": true,
+            "type": "integer",
+            "format": "base64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "summary": "Bookmark create endpoint",
+        "description": "Requires article id to create a bookmark.",
+        "tags": [
+          "Bookmarks"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "type": "string",
+            "name": "Authorization",
+            "description": "Header",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Id of the user to delete",
+            "required": true,
+            "type": "integer",
+            "format": "base64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Bookmark delete endpoint",
+        "description": "Deletes a bookmark",
+        "tags": [
+          "Bookmarks"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "type": "string",
+            "name": "Authorization",
+            "description": "Header",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Id of the user to delete",
+            "required": true,
+            "type": "integer",
+            "format": "base64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/bookmarks/user/{id}": {
+      "get": {
+        "summary": "User bookmarks endpoint",
+        "description": "Gets all bookmark on given user",
+        "tags": [
+          "Bookmarks"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "type": "string",
+            "name": "Authorization",
+            "description": "Header",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Id of the user to delete",
+            "required": true,
+            "type": "integer",
+            "format": "base64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/bookmarks/article/{id}": {
+      "get": {
+        "summary": "Article bookmarks endpoint",
+        "description": "Gets all bookmark on given article",
+        "tags": [
+          "Bookmarks"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "type": "string",
+            "name": "Authorization",
+            "description": "Header",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Id of the user to delete",
+            "required": true,
+            "type": "integer",
+            "format": "base64"
           }
         ],
         "responses": {
