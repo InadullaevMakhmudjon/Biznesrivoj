@@ -60,8 +60,8 @@ export default {
   logout(req, res) {
     models.User.update({
       lastLoggedOut: new Date(),
-    }, { where: { id: req.user.id } })
-      .then(() => res.send(200))
+    }, { where: { id: req.params.id } })
+      .then(() => res.status(200).json({ message: 'Logged out' }))
       .catch((error) => res.status(502).json({ error }));
   },
 };
