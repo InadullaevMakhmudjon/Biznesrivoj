@@ -1,10 +1,7 @@
-import fs from 'fs';
 import models from '../models';
 import { paginate, dynamicSort as sort } from '../utils/pagination';
 
 require('dotenv').config();
-
-const BASE_URL = process.env.BASE_URL || 'http://localhost:3040';
 
 function find(where, query, res) {
   Promise.all([
@@ -39,28 +36,15 @@ export default {
       .catch((error) => res.status(502).json(error));
   },
   create(req, res) {
-    if (req.files) {
-      const { file } = req.files;
-      const filename = `${new Date().toISOString()}-${file.name}`;
-      file.mv(`./files/${filename}`, (err) => {
-        if (err) { res.status(500).json(err); } else {
-          models.File.create({ url: `${BASE_URL}/files/${filename}` })
-            .then(() => res.status(201).json({ url: `${BASE_URL}/files/${filename}` }))
-            .catch((error) => res.status(502).json(error));
-        }
-      });
-    } else {
-      res.status(403).json({ message: 'file currupted or larger than expected' });
-    }
+    models.File.create({ url: req.body.url })
+      .then(() => res.status(201).json(req.body))
+      .catch((error) => res.status(502).json(error));
   },
   delete(req, res) {
     models.File.findByPk(req.params.id).then((file) => {
-      const path = `./files/${file.url.split('/')[2]}`;
-      fs.unlink(path, () => {
-        models.File.destroy({ where: { id: req.params.id } })
-          .then(() => res.sendStatus(200))
-          .catch((error) => res.status(502).json(error));
-      });
+      models.File.destroy({ where: { id: req.params.id } })
+        .then(() => res.sendStatus(200))
+        .catch((error) => res.status(502).json(error));
     });
   },
 };
