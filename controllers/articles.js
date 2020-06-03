@@ -115,14 +115,14 @@ export default {
     models.Article.create(req.article)
       .then((article) => {
         article.setCategories(req.article.categories)
-          .then(() => res.sendStatus(200));
+          .then(() => res.sendStatus(201));
       }).catch((error) => res.status(502).json({ error }));
   },
   update(req, res) {
     models.Article.update(req.article, { where: { slug: req.params.slug } })
       .then(async () => {
         const article = await models.Article.findOne({
-          where: { slug: req.article.slug === req.params.slug ? req.params.slug : req.article.slug },
+          where: { slug: req.article.slug ? req.article.slug : req.params.slug },
           include: [{ model: models.Category, as: 'categories' }],
         });
         if (req.article.categories) {
