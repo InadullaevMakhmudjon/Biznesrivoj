@@ -61,9 +61,9 @@ const getAll = (req, res) => {
 };
 const getUserBookmarks = async (req, res) => {
   try {
-    const condition = await exists(models.User, { id: req.params.id || req.user.id });
+    const condition = await exists(models.User, { id: req.params.id });
     if (condition) {
-      const [total, bookmarks] = await findBookmarks({ userId: req.params.id || req.user.id }, req);
+      const [total, bookmarks] = await findBookmarks({ userId: req.params.id }, req);
       const data = bookmarks.map(({ article }) => article);
       res.status(200).json({ total, data });
     } else {
@@ -86,9 +86,10 @@ const getArticleBookmarks = async (req, res) => {
 const create = async (req, res) => {
   try {
     const condition = await exists(models.Article, { id: req.params.id });
-    if (condition) {
+    const userId = req.query.userId ? req.query.userId.split('?')[0] : false;
+    if (condition && userId) {
       await models.Bookmark.create({
-        userId: req.user.id,
+        userId,
         articleId: Number(req.params.id),
       });
       res.sendStatus(201);

@@ -42,7 +42,7 @@ export const validate = (req, res, next) => {
     res.status(403).json(errors.array());
   } else {
     req.article = {
-      UserId: req.user.id,
+      UserId: req.query.userId.split('?')[0],
       metaFields: req.body.metaFields,
       slug: req.body.slug,
       title_uz: req.body.title_uz,
