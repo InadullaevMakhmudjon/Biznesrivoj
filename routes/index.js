@@ -8,12 +8,12 @@ import verify from './verify';
 import bookmarks from './bookmarks';
 
 export default (app) => {
-  app.use('/api/auth', auth);
-  app.use('/api/users', users);
-  app.use('/api/articles', articles);
-  app.use('/api/categories', categories);
-  app.use('/api/home', home);
-  app.use('/api/files', files);
-  app.use('/api/verify', verify);
-  app.use('/api/bookmarks', bookmarks);
+  app.use('/auth', auth);
+  app.use('/users', users);
+  app.use('/articles', articles);
+  app.use('/categories', categories);
+  app.use('/home', home);
+  app.use('/files', files);
+  app.use('/verify', verify);
+  app.use('/bookmarks', bookmarks);
 };
