@@ -1,7 +1,7 @@
 import { checkSchema, validationResult } from 'express-validator/check';
 import { hashSync } from 'bcryptjs';
 import models from '../../models';
-import { exists } from '../check';
+import { exists, modifiedExist } from '../check';
 
 export const check = checkSchema({
   firstname: {
@@ -128,5 +128,15 @@ export const validateUpdate = (req, res, next) => {
       ...req.body,
     };
     next();
+  }
+};
+
+export const checkIsExists = async (req, res) => {
+  const { phone } = req.query;
+  if (phone) {
+    const isExist = await modifiedExist(models.User, { phone: `+${phone}` }, false);
+    res.sendStatus(isExist ? 200 : 204);
+  } else {
+    res.status(403).json({ message: 'Please provide phone' });
   }
 };
