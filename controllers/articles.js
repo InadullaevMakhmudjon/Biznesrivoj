@@ -81,9 +81,11 @@ function getUserOwn({ user, query }, res, next) {
 
 export default {
   getAll(req, res) {
-    const { own } = req.query;
-    if (own) getUserOwn(req, res, (total, data) => res.status(200).json({ total, data }));
-    else find(req.query, null, res, (articles) => res.status(200).json(articles));
+    //* Commented cause getting all articles for
+    //* spacific user is not important, and not required even not asked,
+    // const { own } = req.query;
+    // if (own) getUserOwn(req, res, (total, data) => res.status(200).json({ total, data }));
+    /* else */ find(req.query, null, res, (articles) => res.status(200).json(articles));
   },
   get(req, res) {
     models.Article.findOne({
