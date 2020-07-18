@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import credentials from '../controllers/credentials';
+import environments from '../controllers/environments';
 
 const router = Router();
 
-router.post('/', credentials.get);
+router.post('/', environments.get);
 
 export default router;
