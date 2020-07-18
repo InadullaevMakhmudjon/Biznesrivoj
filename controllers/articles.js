@@ -1,14 +1,13 @@
-import models from "../models";
-import { paginate, dynamicSort as sort, types } from "../utils/pagination";
+import models from '../models';
+import { paginate, dynamicSort as sort, types } from '../utils/pagination';
 
 export function viewed(articles) {
   const tasks = articles.map(
-    ({ id }) =>
-      new Promise((res, rej) => {
-        models.Article.increment({ views: 1 }, { where: { id } })
-          .then(() => res())
-          .catch((error) => rej(error));
-      })
+    ({ id }) => new Promise((res, rej) => {
+      models.Article.increment({ views: 1 }, { where: { id } })
+        .then(() => res())
+        .catch((error) => rej(error));
+    }),
   );
   return Promise.all(tasks);
 }
@@ -21,29 +20,29 @@ function find(query, where, res, next, condition) {
       ...paginate(query),
       ...sort(query, types.ARTICLE),
       attributes: {
-        exclude: condition ? [] : ["body_uz", "body_kr"],
+        exclude: condition ? [] : ['body_uz', 'body_kr'],
       },
       include: [
         {
           model: models.User,
-          as: "creator",
+          as: 'creator',
           attributes: {
-            exclude: ["password"],
+            exclude: ['password'],
           },
           include: [
             {
               model: models.Role,
-              as: "role",
+              as: 'role',
             },
             {
               model: models.Gender,
-              as: "gender",
+              as: 'gender',
             },
           ],
         },
         {
           model: models.Category,
-          as: "categories",
+          as: 'categories',
           through: { attributes: [] },
         },
       ],
@@ -70,7 +69,7 @@ function getUserOwn({ user, query }, res, next) {
       include: [
         {
           model: models.Category,
-          as: "categories",
+          as: 'categories',
           through: { attributes: [] },
         },
       ],
@@ -89,9 +88,7 @@ export default {
     //* spacific user is not important, and not required even not asked,
     // const { own } = req.query;
     // if (own) getUserOwn(req, res, (total, data) => res.status(200).json({ total, data }));
-    /* else */ find(req.query, null, res, (articles) =>
-      res.status(200).json(articles)
-    );
+    /* else */ find(req.query, null, res, (articles) => res.status(200).json(articles));
   },
   get(req, res) {
     models.Article.findOne({
@@ -99,7 +96,7 @@ export default {
       include: [
         {
           model: models.Category,
-          as: "categories",
+          as: 'categories',
           through: { attributes: [] },
         },
       ],
@@ -109,7 +106,7 @@ export default {
           await viewed([article]);
           res.status(200).json(article);
         } else {
-          res.status(404).json({ message: "Given slug is not exist" });
+          res.status(404).json({ message: 'Given slug is not exist' });
         }
       })
       .catch((err) => res.status(502).json(err));
@@ -135,7 +132,7 @@ export default {
           where: {
             slug: req.article.slug ? req.article.slug : req.params.slug,
           },
-          include: [{ model: models.Category, as: "categories" }],
+          include: [{ model: models.Category, as: 'categories' }],
         });
         if (req.article.categories) {
           await article.removeCategories(article.categories);
@@ -150,7 +147,7 @@ export default {
   delete(req, res) {
     models.Article.findOne({
       where: { slug: req.params.slug },
-      include: [{ model: models.Category, as: "categories" }],
+      include: [{ model: models.Category, as: 'categories' }],
     })
       .then(async (article) => {
         if (article) {
@@ -158,7 +155,7 @@ export default {
           await article.destroy();
           res.sendStatus(200);
         } else {
-          res.status(202).json({ message: "Given slug is not found" });
+          res.status(202).json({ message: 'Given slug is not found' });
         }
       })
       .catch((error) => res.status(502).json({ error }));
