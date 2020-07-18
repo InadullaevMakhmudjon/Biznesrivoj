@@ -63,3 +63,5 @@ typings/
 backups
 
 .docker.env
+credentials.json
+credentials.js

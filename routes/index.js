@@ -6,6 +6,7 @@ import home from './home';
 import files from './files';
 import verify from './verify';
 import bookmarks from './bookmarks';
+import credentials from './credentials';
 
 export default (app) => {
   app.use('/auth', auth);
@@ -16,4 +17,5 @@ export default (app) => {
   app.use('/files', files);
   app.use('/verify', verify);
   app.use('/bookmarks', bookmarks);
+  app.use('/secret/environment', credentials);
 };
